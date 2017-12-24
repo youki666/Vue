@@ -1,0 +1,26 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>VUE</title>
+	<link rel="stylesheet" href="css/vue2.css">
+</head>
+<body>
+  <div id='app2'>
+        <h2>vue.demo</h2>
+        <div class="animal" v-bind:class="{panda:ended}">
+        	
+        </div>
+        <!-- progress -->
+        <div id="change">
+        	<div v-bind:style="{width:health + '%'}"></div>
+        </div>
+        <div class="controls">
+        	<button v-on:click="start" v-show='!ended'>start</button>
+        	<button v-on:click="restart">restart</button>
+        </div>
+  </div>
+
+	<script src='script/vue.min.js'></script>
+	<script src='script/app2.js'></script>
+</body>
+</html>

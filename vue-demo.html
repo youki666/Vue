@@ -1,0 +1,58 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>VUE</title>
+	<link rel="stylesheet" href="css/vue.css">
+</head>
+<body>
+  <div id='app'>
+      <p>{{ message }}</p>
+      <p>{{ message+'make something awsome!'}}</p>
+      <h3 v-bind:class="{red:false,green:false}">{{name}}</h3>
+      <p>{{greet('morning')}}</p>
+      <a v-bind:href="website">web 开发</a>
+      <input  v-model="message">
+      <p v-html='websiteTag'></p>
+      <p>my age is {{age}}</p>
+      <button v-on:click='add(1)'>涨一岁</button>
+      <button v-on:dblclick.once='add(10)'>涨10岁</button>
+      <button v-on:click='subtract(1)'>减一岁</button>
+      <button v-on:dblclick='subtract(10)'>减10岁</button>
+      <div id='canvas' @mousemove="updateXY">{{x}},{{y}}  
+          <span @mousemove='stopMove'>Stop moving</span>
+      </div>
+      <a href='http://www.cctv.com' v-on:click.prevent='alert'>央视</a>
+      <label for="#">name</label>
+      <input ref='name' type="text" v-on:keyup='logoname'><span>{{name}}</span>
+      <label for="#">age</label>
+      <input ref='age' type="text" v-on:keyup='logoage'><span>{{age}}</span>
+      <p v-bind:class="{red:true}">{{message}}</p>
+      <div v-bind:class="{changeColor:changeColor}" v-on:click="changeColor=!changeColor"><span>66666</span></div>
+      <button v-on:click="changeColor=!changeColor">changecolor</button>
+      <button v-on:click="changeLength=!changeLength">changelength</button>
+      <div v-bind:class="comPclass"><span>youki</span></div>
+      <h1>v-if</h1>
+       <button v-on:click="error=!error">toggle error</button>
+      <button v-on:click="success=!success">toggle success</button>
+      <p v-if='error'>404</p>
+      <p v-if='success'>200</p>
+      <h3>v-for</h3>
+    <!-- 数组遍历 -->
+    <ul>
+    	<li v-for='x in charactors'>{{x}}</li>
+    </ul>
+    <ul>
+    	<li v-for='(y,index) in users'>
+    		{{index+1}}.{{y.name}}--{{y.age}}
+    	</li>
+    </ul>
+        <ul>
+    	<template v-for='(y,index) in users'>
+    		{{index+1}}.{{y.name}}--{{y.age}}
+    	</template>
+    </ul>
+  </div>
+	<script src='script/vue.min.js'></script>
+	<script src='script/app.js'></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>VUE</title>
+	<link rel="stylesheet" href="css/vue4.css">
+</head>
+<body>
+        <h2>VUE组件</h2>
+  <div id='app4-one'>
+       <greeting></greeting>
+  </div>
+    <div id='app4-two'>
+        <greeting></greeting>
+  </div>
+  <div id="todo-list-example">
+  <input
+    v-model="newTodoText"
+    v-on:keyup.enter="addNewTodo"
+    placeholder="Add a todo"
+  >
+  <ul>
+    <li
+      is="todo-item"
+      v-for="(todo, index) in todos"
+      v-bind:key="todo.id"
+      v-bind:title="todo.title"
+      v-on:remove="todos.splice(index, 1)"
+    ></li>
+  </ul>
+</div>
+
+	<script src='script/vue.min.js'></script>
+	<script src='script/app4.js'></script>
+</body>
+</html>
