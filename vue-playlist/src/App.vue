@@ -1,28 +1,33 @@
+<!-- 模板 -->
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+      <app-header></app-header> 
+      <users></users>
+      <app-footer></app-footer>
   </div>
 </template>
-
+<!-- 行为 -->
 <script>
-import HelloWorld from './components/HelloWorld'
+import Users from './components/User'//局部注册组件
+import apphead from './components/app-Header'//局部注册组件
+import appfooter from './components/footer'//局部注册组件
+       export default {
+      name: 'app',
+       data(){
+        return {
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+        }
+       components:{
+        "users":Users,
+        "app-header":apphead,
+        'app-footer':appfooter
+       }
+     }
+    }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<!-- 样式 -->
+<style scoped>
+  h1 {
+    color: purple;
+  }
 </style>
