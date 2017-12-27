@@ -1,7 +1,7 @@
 <template>
   <div class="footers">
        <footer>
-       	<h3>&copy; {{copyright}}</h3>
+       	<h3>&copy; {{copyright}}{{title}}</h3>
        </footer>
   </div>
 </template>
@@ -9,6 +9,11 @@
 <script>
     export default {
       name: 'footers',
+            props:{
+          title:{
+      	type:String
+      	}
+      },
       data(){
           return {
           	copyright:'Design by youki!'

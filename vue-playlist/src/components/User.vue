@@ -1,44 +1,39 @@
 <template>
-  <div class="User">
-  <h1>hello world!</h1>
+  <div class="users">
+        <h1>父组件传值</h1>
      <ul>
      	<li v-for='user in users' v-on:click="user.show=!user.show">
      		<h2>{{user.name}}</h2>
      		<h3 v-show="user.show">{{user.position}}</h3>
      	</li>
      </ul>
+     <button v-on:click='deleteUser'>删除</button>
   </div>
 </template>
 
 <script>
+/*传值：string array boolean 
+   引用：array object*/
     export default {
-      name: 'User',
-       data(){
-       	return {
-             users:[
-                 {name:'youki',position:'developer',show:false},
-                 {name:'gates',position:'developer',show:false},
-                 {name:'jobs',position:'developer',show:false},
-                 {name:'mango',position:'developer',show:false},
-                 {name:'bill',position:'developer',show:false},
-                 {name:'john',position:'developer',show:false},
-                 {name:'kitty',position:'developer',show:false},
-                 {name:'echo',position:'developer',show:false},
-                 {name:'santo',position:'developer',show:false},
-                 {name:'youki',position:'developer',show:false},
-             ]
-       	}
-       }
+      name: 'users',
+     props:['users'],
+     methods:{
+     	deleteUser:function(){
+     		this.users.pop();
+     	}
+     }
+
     }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-   .User{
+   .users{
    	width: 100%;
    	max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
+    color: #aaa;
     box-sizing: border-box;
    }
    ul {
