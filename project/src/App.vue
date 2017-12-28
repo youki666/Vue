@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+     <users></users>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+/*import Test from './components/test'*/
+import users from './components/users'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    users
   }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
