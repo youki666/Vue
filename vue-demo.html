@@ -1,58 +1,111 @@
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>VUE</title>
-	<link rel="stylesheet" href="css/vue.css">
+  <meta charset="UTF-8">
+  <title>Vue+Bootstrap实现简易留言</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src='script/jquery.min.js'></script>
+  <script src='script/bootstrap.min.js'></script>
+  <style>
+    .container {
+      width: 800px;
+      margin: 0 auto;
+      border: 1px solid green;
+      position: relative;
+    }
+    .container h2 {
+      margin-top: 20px;
+      font-size: 48px;
+      color: navy;
+      text-align: center;
+    }
+    .modal {
+      position: absolute;
+      top: 380px;
+       left: 300px;
+      width: 200px;
+    }
+  </style>
 </head>
 <body>
-  <div id='app'>
-      <p>{{ message }}</p>
-      <p>{{ message+'make something awsome!'}}</p>
-      <h3 v-bind:class="{red:false,green:false}">{{name}}</h3>
-      <p>{{greet('morning')}}</p>
-      <a v-bind:href="website">web 开发</a>
-      <input  v-model="message">
-      <p v-html='websiteTag'></p>
-      <p>my age is {{age}}</p>
-      <button v-on:click='add(1)'>涨一岁</button>
-      <button v-on:dblclick.once='add(10)'>涨10岁</button>
-      <button v-on:click='subtract(1)'>减一岁</button>
-      <button v-on:dblclick='subtract(10)'>减10岁</button>
-      <div id='canvas' @mousemove="updateXY">{{x}},{{y}}  
-          <span @mousemove='stopMove'>Stop moving</span>
-      </div>
-      <a href='http://www.cctv.com' v-on:click.prevent='alert'>央视</a>
-      <label for="#">name</label>
-      <input ref='name' type="text" v-on:keyup='logoname'><span>{{name}}</span>
-      <label for="#">age</label>
-      <input ref='age' type="text" v-on:keyup='logoage'><span>{{age}}</span>
-      <p v-bind:class="{red:true}">{{message}}</p>
-      <div v-bind:class="{changeColor:changeColor}" v-on:click="changeColor=!changeColor"><span>66666</span></div>
-      <button v-on:click="changeColor=!changeColor">changecolor</button>
-      <button v-on:click="changeLength=!changeLength">changelength</button>
-      <div v-bind:class="comPclass"><span>youki</span></div>
-      <h1>v-if</h1>
-       <button v-on:click="error=!error">toggle error</button>
-      <button v-on:click="success=!success">toggle success</button>
-      <p v-if='error'>404</p>
-      <p v-if='success'>200</p>
-      <h3>v-for</h3>
-    <!-- 数组遍历 -->
-    <ul>
-    	<li v-for='x in charactors'>{{x}}</li>
-    </ul>
-    <ul>
-    	<li v-for='(y,index) in users'>
-    		{{index+1}}.{{y.name}}--{{y.age}}
-    	</li>
-    </ul>
-        <ul>
-    	<template v-for='(y,index) in users'>
-    		{{index+1}}.{{y.name}}--{{y.age}}
-    	</template>
-    </ul>
+  <div class="container" id='box'>
+    <h2>Vue+Bootstrap实现简易留言</h2>
+       <form role='form'>
+          <div class="form-group">
+           <label for="name">用户名:</label>
+          <input type="text" id='username' placeholder="请输入用户名" class="form-control" v-model="username">
+         </div>
+         <div class="form-group">
+           <label for="age">年龄:</label>
+          <input type="text" id='age' placeholder="请输入年龄" class="form-control" v-model="age">
+         </div>
+         <div class="form-group">
+                <button class="btn btn-sm btn-primary" value="添加" v-on:click="add()">添加</button>
+                <button class="btn btn-sm btn-danger" value="删除">重置</button>
+         </div>
+       </form>
+       <hr>
+       <table class="table table-bordered table-hover">
+         <caption class="h2 text-danger  text-center">用户信息表</caption>
+         <tr>
+           <th class="text-center">序号</th>
+           <th class="text-center">用户名</th>
+           <th class="text-center">年龄</th>
+           <th class="text-center">操作</th>
+         </tr>
+          <tr class="text-center" v-for="user in users">
+           <td>{{user.index}}</td>
+           <td>{{user.name}}</td>
+           <td>{{user.age}}</td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="#myModal">删除</button></td>
+         </tr>
+         <tr>
+           <td colspan='4' class="text-right"><button class="btn btn-danger">全部删除</button></td>
+         </tr>
+          <tr>
+           <td colspan='4' class="text-center text-muted"><p>暂无数据......</p></td>
+         </tr>
+       </table>
+       <div class="modal fade" id="myModal" role="dialog">
+            <div class="dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button class="close" data-dismiss="modal" ><span>&times;</span></button>
+                  <h4 class="modal-title">确认删除吗?</h4>
+                </div>
+                <div class="modal-body text-right">
+                  <button class="btn btn-primary" data-dismiss="modal">确定</button>
+                  <button class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+              </div>
+            </div>
+        </div>
   </div>
-	<script src='script/vue.min.js'></script>
-	<script src='script/app.js'></script>
+   <script src='script/vue.min.js'></script>
+   <script>
+     window.onload=function(){
+      new Vue({
+        el:"#box",
+        data:{
+           users:[],
+           username:'',
+           age:'',
+           index:1
+        },
+        methods:{
+          add:function(e){
+            e.preventDefault();
+            alert(1);
+            this.users.push({
+              name:this.username,
+              age:this.age,
+              index:this.index++
+            });
+            this.username='';
+            this.age='';
+          }
+        }
+      })
+     }
+   </script>
 </body>
 </html>

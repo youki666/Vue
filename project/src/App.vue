@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-     <users></users>
+  <h1>在线翻译</h1>
+  <h5>简单、便捷</h5>
+    <translateform></translateform>
   </div>
 </template>
 
 <script>
 /*import Test from './components/test'*/
-import users from './components/users'
+import Output from './components/translateoutput'
+import Form from './components/translateform'
+
 
 export default {
   name: 'app',
   components: {
-    users
+   
   }
 }
 </script>
