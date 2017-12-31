@@ -26,16 +26,15 @@ export default {
   methods:{
     translateText:function(text,lang){
       //console.log(text);
-      this.$http.get("https://translate.yandex.net/api/v1.5/tr.json/translate ?key=trnsl.1.1.20171230T131002Z.f12e910c440f488a.ff152755f28df7f3127044c905646e07a05b3c21&lang="+lang+"&text="+text)
+      this.$http.jsonp("https://translate.yandex.net/api/v1.5/tr.json/translate ?key=trnsl.1.1.20171230T131002Z.f12e910c440f488a.ff152755f28df7f3127044c905646e07a05b3c21&lang="+lang+"&text="+text)
       .then((response)=>{
-       // console.log(response);
-       this.translatedText=response.body.text[0];
+       console.log(response);
+       //this.translatedText=response.body.text[0];
       })
     }
   }
 }
 </script>
-
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

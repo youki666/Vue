@@ -1,7 +1,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Vue在线翻译</title>
+  <title>Vue Translate online</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="https://translate.yandex.net" />
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src='script/jquery.min.js'></script>
   <script src='script/bootstrap.min.js'></script>
@@ -18,100 +20,95 @@
       color: navy;
       text-align: center;
     }
-        .modal {
-      position: absolute;
-      top: 380px;
-       left: 300px;
-      width: 200px;
+    #translateForm input,select,button {
+      margin: 0 40px;
+    }
+    #translateOutput{
+      margin: 0 auto;
+      width: 50%;
     }
   </style>
 </head>
 <body>
   <div class="container" id="box">
-        <h2 class="text-info text-center">Vue+Bootstrap实现简易留言</h2>
-       <form role='form'>
-          <div class="form-group">
-           <label for="name">Username</label>
-           <input type="text" class="form-control" placeholder="please input your username" v-model="username" id="username">
-         </div>
-         <div class="form-group">
-            <label for="age">Age</label>
-           <input type="text" class="form-control" placeholder="please input your age" v-model="age" id="age">
-         </div>
-         <div class="form-group">
-                <button class="btn btn-sm btn-primary" value="添加" v-on:click="add()">添加</button>
-                <button class="btn btn-sm btn-danger" value="删除" v-on:click="reset()">重置</button>
-         </div>
-       </form>
-        <table class="table table-bordered table-hover">
-            <caption class="h3 text-center text-muted">Some info of users</caption>
-            <tr>
-                <th class="text-center">序号</th>
-                <th class="text-center">姓名</th>
-                <th class="text-center">年龄</th>
-                <th class="text-center">操作</th>
-            </tr>
-            <tr v-for="user in users" class="text-center" >
-                <td>{{user.index}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.age}}</td>
-                <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal">删除</button></td>
-            </tr>
-            <tr v-show="users.length==0">
-                <td colspan='4' class="text-center text-muted"><p>暂无数据...</p></td>
-            </tr>
-            <tr v-show="users.length!=0">
-                <td colspan='4' class="text-right">
-                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal">全部删除</button>
-                </td>
-            </tr>
-        </table>
-       <div class="modal fade" id="myModal" role="dialog">
-             <div class="dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button class="close" data-dismiss="modal" ><span>&times;</span></button>
-                  <h4 class="modal-title">确认删除吗?</h4>
-                </div>
-                <div class="modal-body text-right">
-                  <button class="btn btn-primary" data-dismiss="modal">确定</button>
-                  <button class="btn btn-danger" data-dismiss="modal">取消</button>
-                </div>
-              </div>
-            </div>
-        </div>
+             <h2>Translate online</h2>
+             <h5 class="text-muted text-center">简单/便捷/实用</h5>
+                <translateform v-on:submit="translateText"></translateform>
+                <translateOutput v-text="translatedText"></translateOutput>
   </div>
    <script src='script/vue.min.js'></script>
+   <script src="https://cdn.bootcss.com/vue-resource/1.3.4/vue-resource.min.js"></script>
   <script>
     window.onload=function(){
-      new Vue({
-        el:'#box',
-        data:{
-           users:[
-               {name:'youki',age:'24',},
-               {name:'youki',age:'24',}
-           ],
-           username:'',
-           age:'',
-           index:1
+      //注册局部组件1
+      var Form={
+        name: 'translateForm',
+        template:`
+            <div id='translateForm'>
+               <form class="well form-inline" v-on:submit="submit">
+                 <input type="text" placeholder="请输入要翻译的内容！" class="form-control" v-model='textTotranslate'>
+                 <select class="form-control" v-model='lang'>
+                   <option value="en">English</option>
+                   <option value="jp">Japanese</option>
+                 </select>
+               <button class="btn btn-primary">翻译</button>
+               </form>
+             </div>
+        `,
+        data:function(){
+          return {
+            textTotranslate:'',
+            lang:'',
+          }
         },
         methods:{
-           add:function(){
-            this.users.push({
-                name:this.username,
-                age:this.age,
-                index:this.index++
-            });
-            this.username='';
-            this.age='';
-           },
-           deleteMsg:function(){
-            this.users.splice(index,1);
-           }
-      }
+          submit:function(e){
+             e.preventDefault();
+             //console.log(this.textTotranslate+this.lang);
+            this.$emit("submit",this.textTotranslate,this.lang);
+          }
+        }
 
-      })
+        }
+       //注册局部组件2
+     var  Output={
+      name: 'translateOutput',
+        template:
+        `
+          <div id="translateOutput">
+              <h2>{{translatedText}}</h2>
+         </div>
+        `,
+          props: [
+           "translatedText"
+       ]
       }
+      //创建根实例
+        new Vue({
+           el:"#box",
+          components:{
+            'translateform':Form,
+            'translateOutput':Output
+          },
+            data:function(){
+         return  {
+            translatedText:''
+            }
+          },
+           methods:{
+               translateText:function(text,lang){
+                 console.log(text+lang);
+                  this.$http.jsonp("https://translate.yandex.net/api/v1.5/tr.json/translate ?key=trnsl.1.1.20171230T131002Z.f12e910c440f488a.ff152755f28df7f3127044c905646e07a05b3c21&lang="+lang+"&text="+text)
+                .then((response)=>{
+                  console.log(response);
+               //this.translatedText=response.body.text[0];
+                  })
+               }
+           }
+        })
+        }
+
+
   </script>
 </body>
 </html>
