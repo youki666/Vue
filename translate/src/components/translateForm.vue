@@ -1,9 +1,9 @@
 <template>
   <div id="translateForm">
-      <div >
-      	      <form v-on:submit="Formsubmit" class="well form-inline">
+      <div class="container">
+      	  <form v-on:submit="Formsubmit" class="well form-inline">
       	<input type="text" placeholder="请输入要翻译的内容" v-model="textTotranslate" class="form-control">
-      	<select v-model="language"  class="form-control">
+      	<select v-model="selected"  class="form-control">
       		<option value="en">English</option>
       		<option value="ru">Russian</option>
       		<option value="ko">Korean</option>
@@ -22,13 +22,13 @@ export default {
   data:function(){
        return {
        	textTotranslate:'',
-       	language:''
+       	selected:'en'
        }
   },
   methods:{
   	Formsubmit:function(e){
   		//alert(this.textTotranslate);
-  		this.$emit("submit",this.textTotranslate,this.language);
+  		this.$emit("submit",this.textTotranslate,this.selected);
   		e.preventDefault();
   	}
   }
@@ -36,12 +36,42 @@ export default {
 </script>
 
 <style scoped>
-@media (min-width: 768px){
-     #translateForm {
-     	position: absolute;
-     	top: 160px;
-     	left:420px;
-     	width: 600px;
+       .container {
+      width: 800px;
+      margin: 0 auto;
+    }
+      .container h2 {
+      margin-top: 20px;
+      font-size: 48px;
+      color: navy;
+      text-align: center;
+    }
+
+    #translateForm input,select,button {
+      margin: 0 50px;
      }
- }
+    @media( max-width: 768px){
+    .container {
+      width: 420px;
+      margin: 0 auto;
+    }
+      .container h2 {
+      margin-top: 20px;
+      font-size: 24px;
+      color: navy;
+      text-align: center;
+    }
+      #translateForm form {
+        width: 360px;
+         margin: 20px;
+         padding: 20px;
+    }
+
+     #translateForm input,select,button {
+      margin: 20px 0px;
+     }
+      #translateForm button {
+        width: 100%;
+     }
+    }
 </style>
