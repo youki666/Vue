@@ -1,0 +1,61 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue多层传递</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src='script/jquery.min.js'></script>
+  <script src='script/bootstrap.min.js'></script>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="container"  id='box'>
+       <parent :imgtitle='title' :imgsrc='img' ></parent>
+  </div>
+       <template id='myimg'>
+         <img :src="imgsrc" alt='555'>
+       </template>
+        <template id='mytitle'>
+         <h2>{{title}}</h2>
+       </template>
+       <template id='parent'>
+          <div>
+             <child1 :imgsrc='imgsrc' ></child1>
+             <child2 :title='imgtitle'></child2>
+          </div>
+       </template>
+   <script src='script/vue.min.js'></script>
+   <script src='script/vue-router.js'></script>
+
+   <script>
+          window.onload=function(){
+            //子组件构造器
+           var child1= Vue.extend({
+                template:'#myimg',
+                props:['imgsrc']
+              });
+             var child2= Vue.extend({
+                template:'#mytitle',
+                props:['title']
+              });
+              Vue.component('parent',{
+                  props:['imgtitle','imgsrc'],
+                  components:{
+                    'child1':child1,
+                    'child2':child2
+                  },
+                  template:'#parent'
+              })
+               new Vue({
+                el:'#box',
+                 data:{
+                  title:'i am youki',
+                  img:'image/7.jpg',
+                 }
+                });
+               }
+     
+   </script>
+</body>
+</html>

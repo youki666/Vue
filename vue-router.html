@@ -1,0 +1,135 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-router</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src='script/jquery.min.js'></script>
+  <script src='script/bootstrap.min.js'></script>
+  <style>
+     body{
+      background-color: #e8e8e8;
+     }
+  </style>
+</head>
+<body>
+    <div id='app'>
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+          <div class="panel-header">
+            <h2>IT666</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2 col-xs-offset-2">
+          <div class="list-group">
+            <router-link class='list-group-item' :to="{name:'h5'}">HTML5</router-link>
+            <router-link class='list-group-item' :to="{name:'java'}">Java</router-link>
+            <router-link class='list-group-item' :to="{name:'python'}">Python</router-link>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="panel">
+            <div class="panel-body">
+              <router-view></router-view>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <template id='h5'>
+      <div>
+        <h2>H5学院</h2>
+        <p>掌握神技能</p>
+        <img src="image/4.jpg" width="200">
+        <div>
+          <ul class="nav nav-tabs">
+            <router-link to='/h5/basic'>基础</router-link>
+            <span>|</span>
+            <router-link to='/h5/big'>大师</router-link>
+          </ul>
+          <div class="tab-content">
+            <router-view></router-view> 
+          </div>
+        </div>
+      </div>
+    </template>
+        <template id='basic'>
+      <div>
+        <h3>H5基础学院</h3>
+        <p>掌快速掌握html</p>
+        <img src="image/3.jpg" width="150">
+      </div>
+    </template>
+        <template id='big'>
+      <div>
+        <h4>H5大师学院</h4>
+        <p>掌握神技能,精通H5</p>
+        <img src="image/7.jpg" width="150">
+      </div>
+    </template>
+        <template id='java'>
+      <div>
+        <h2>java学院</h2>
+        <p>掌握神技能</p>
+        <img src="image/6.jpg" width="200">
+      </div>
+    </template>
+            <template id='python'>
+      <div>
+        <h2>python学院</h2>
+        <p>掌握神技能</p>
+        <img src="image/2.jpg" width="200">
+      </div>
+    </template>
+   <script src='script/vue.min.js'></script>
+   <script src='script/vue-router.js'></script>
+   <script>
+          window.onload=function(){
+            //子组件构造器
+          const h5=  Vue.extend({
+              template:'#h5'
+            });
+                    const basic=  Vue.extend({
+              template:'#basic'
+            });
+                    const big=  Vue.extend({
+              template:'#big'
+            });
+                   const java=  Vue.extend({
+              template:'#java'
+            });
+                            const python=  Vue.extend({
+              template:'#python'
+            });
+                            //luyou
+                            const routes=[
+                           {
+                            path:'/h5',
+                            name:'h5',
+                            component:h5,
+                            children:[
+                            {path:'basic',component:basic},
+                            {path:'big',component:big},
+                             //根路由
+                             {path:'/',redirect:'basic'}
+                            ]
+                          },
+                           {path:'/java',component:java,name:'java'},
+                           {path:'/python',component:python,name:'python'},
+                                  //根路由
+                           {path:'/',redirect:'h5'},
+
+                            ];
+                            //路由实例
+                            const router= new VueRouter({
+                              routes
+                            });
+                            //创建实例并挂载
+               new Vue({
+                router
+               }).$mount('#app')
+               }
+   </script>
+</body>
+</html>
